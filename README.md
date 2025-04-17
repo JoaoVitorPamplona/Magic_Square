@@ -8,11 +8,11 @@ Repository dedicated to the replication of results achieved in the following pap
 
 If you use this project in your work, please cite it as follows:
 ```bibtex
-@misc{burgard2024fairgeneralizedlinearmixed,
-      title={Fair Generalized Linear Mixed Models}, 
-      author={Jan Pablo Burgard and João Vitor Pamplona},
-      year={2024},
-      eprint={2405.09273},
+@misc{XXXXXXXXXXXXXXXX,
+      title={A Fast Algorithm and Integer Linear Programming for computing Magic Squares}, 
+      author={João Vitor Pamplona and Maria Eduarda Pinheiro and Luiz Rafael dos Santos},
+      year={2025},
+      eprint={XXXX.XXXX},
       archivePrefix={arXiv},
       primaryClass={cs.LG},
       url={https://arxiv.org/abs/2405.09273}, 
