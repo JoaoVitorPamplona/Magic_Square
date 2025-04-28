@@ -1,4 +1,4 @@
-using MKL, LinearAlgebra, JuMP, SparseArrays, Cbc
+using MKL, LinearAlgebra, JuMP, SparseArrays, Cbc, BenchmarkTools, Dates, DataFrames, CSV, Plots, Polynomials
 
 #Build Magic Square using optimization problem
 function buildMS_OPT(n::Int64)
@@ -33,7 +33,7 @@ function buildMS_OPT(n::Int64)
 end
 
 #Build Magic Square of order n that is double even 
-function double_even_ms(n::Int64, Amin::Int64=1)
+function double_even_ms_old(n::Int64, Amin::Int64=1)
   A = reshape(collect(Amin:n^2+(Amin-1)), n, n)'
   n4 = div(n, 4)
   n2 = div(n, 2)
@@ -44,7 +44,28 @@ function double_even_ms(n::Int64, Amin::Int64=1)
   return abs.(multi * M - A)
 end
 
-# Auxliar funtion for double_even_ms() function
+function double_even_ms(n::Int64, Amin::Int64=1)
+  multi = n^2 + 1
+  A_start = Amin
+  result = Matrix{Int64}(undef, n, n)
+
+  n4 = div(n, 4)
+  n2 = div(n, 2)
+
+  for i in 1:n, j in 1:n
+      a_val = A_start + (i - 1) * n + (j - 1)
+      m_val = (
+          (i ≤ n4 || i > n - n4) && (j > n4 && j ≤ n - n4) ||
+          (i > n4 && i ≤ n - n4) && (j ≤ n4 || j > n - n4)
+      ) ? 1 : 0
+      result[i, j] = abs(multi * m_val - a_val)
+  end
+
+  return result
+end
+
+
+#Auxiliar function for double_even_ms() function
 function swap_blocks!(A, nRows, nCols, RowX, ColX, RowY, ColY)
   if nCols == 0
     return
@@ -142,14 +163,13 @@ function ms(n::Int64, Amin::Int64=1)
 end
 
 
+
+
 #Examples of use
 buildMS_OPT(3)
 constMagic(3)
 ms(3)
 ismagic(ms(3))
-nq(9)
-is_nq_solution(nq(9))
-
 
 
 
